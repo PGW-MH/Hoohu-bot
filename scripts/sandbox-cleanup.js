@@ -29,7 +29,7 @@ async function pageEdit(title, content, summary) {
                 text: content,
                 summary,
                 bot: true,
-                tags: 'Bot',
+                tags: 'hoohu-sandbox',
                 watchlist: 'nochange'
             },
             { retry: 10, noCache: true }
