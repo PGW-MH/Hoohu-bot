@@ -1,27 +1,27 @@
-name: Sandbox cleanup
+name: Daily timestamp print
 
 on:
   schedule:
-    - cron: '0 13 * * *'
+    - cron: "0 16 * * *"
   workflow_dispatch:
 
 jobs:
-  cleanup:
+  timestamp:
     runs-on: ubuntu-latest
     steps:
-      - name: Checkout
+      - name: Checkout repository
         uses: actions/checkout@v4
 
       - name: Setup Node.js
         uses: actions/setup-node@v4
         with:
-          node-version: '20'
+          node-version: "20"
 
       - name: Install dependencies
-        run: npm install
+        run: npm ci
 
-      - name: Run cleanup script
-        run: node scripts/sandbox-cleanup.js
+      - name: Run timestamp script
+        run: node scripts/daily-timestamp.js
         env:
           HOOHU_UA: ${{ secrets.HOOHU_UA }}
           HOOHU_PASSWORD: ${{ secrets.HOOHU_PASSWORD }}

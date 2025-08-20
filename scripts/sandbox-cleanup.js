@@ -7,15 +7,15 @@ const api = new MediaWikiApi(config.api, { headers: { 'user-agent': config.usera
 const PAGES = {
     'Pleasant Goat Wiki:Sandbox': {
         content: '<noinclude><!--DO NOT REMOVE THIS LINE-->{{sandbox top}}<!--PERFORM YOUR TEST BELOW--></noinclude>',
-        summary: 'Sandbox cleanup. For long-term testing, please use [[Special:MyPage/sandbox|your personal sandbox]]. You may also check the page history and re-edit if necessary.'
+        summary: 'Sandbox cleanup. For long-term testing, please use [[Special:MyPage/sandbox|your personal sandbox]].'
     },
     'Template:Sandbox': {
         content: '<noinclude><!--DO NOT REMOVE THIS LINE-->{{sandbox top}}<!--PERFORM YOUR TEST BELOW--></noinclude>',
-        summary: 'Sandbox cleanup. For long-term testing, please use [[Special:MyPage/sandbox|your personal sandbox]]. You may also check the page history and re-edit if necessary.'
+        summary: 'Sandbox cleanup. For long-term testing, please use [[Special:MyPage/sandbox|your personal sandbox]].'
     },
     'Module:Sandbox': {
         content: '',
-        summary: 'Sandbox cleanup. For long-term testing, please use “Module:Sandbox/Your_username” or its subpages. You may also check the page history and re-edit if necessary.'
+        summary: 'Sandbox cleanup. For long-term testing, please use “Module:Sandbox/Your_username” or its subpages.'
     }
 };
 
@@ -38,8 +38,7 @@ async function pageEdit(title, content, summary) {
 }
 
 (async () => {
-    console.log(`Start time: ${new Date().toISOString()}`);
-
+    console.log(`[${new Date().toISOString()}] Sandbox cleanup started.`);
     await api.login(config.bot.name, config.bot.password);
 
     const {
@@ -73,5 +72,5 @@ async function pageEdit(title, content, summary) {
         }
     }
 
-    console.log(`[${new Date().toISOString()}] Sandbox cleanup complete.`);
+    console.log(`[${new Date().toISOString()}] Sandbox cleanup completed.`);
 })();
