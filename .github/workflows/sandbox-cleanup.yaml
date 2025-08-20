@@ -23,5 +23,5 @@ jobs:
       - name: Run cleanup script
         run: node scripts/sandbox-cleanup.js
         env:
-          HUUHO_UA: ${{ secrets.HUUHO_UA }}
-          HUUHO_PASSWORD: ${{ secrets.HUUHO_PASSWORD }}
+          HOOHU_UA: ${{ secrets.HOOHU_UA }}
+          HOOHU_PASSWORD: ${{ secrets.HOOHU_PASSWORD }}
