@@ -1,0 +1,12 @@
+{
+    "name": "hoohu-bot",
+    "type": "module",
+    "description": "Pleasant Goat Wiki bot",
+    "scripts": {
+        "cleanup": "node scripts/sandbox-cleanup.js"
+    },
+    "dependencies": {
+        "moment": "^2.30.1",
+        "wiki-saikou": "^3.4.0"
+    }
+}

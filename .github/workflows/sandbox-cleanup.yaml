@@ -1,0 +1,27 @@
+name: Sandbox cleanup
+
+on:
+  schedule:
+    - cron: '0 13 * * *'
+  workflow_dispatch:
+
+jobs:
+  run-bot:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+
+      - name: Install dependencies
+        run: npm install
+
+      - name: Run cleanup script
+        run: node scripts/sandbox-cleanup.js
+        env:
+          BOT_NAME: ${{ secrets.BOT_NAME }}
+          BOT_PASSWORD: ${{ secrets.BOT_PASSWORD }}
