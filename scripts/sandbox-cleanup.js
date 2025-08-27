@@ -9,7 +9,7 @@ const PAGES = {
         summary: 'Sandbox cleanup. For long-term testing, please use [[Special:MyPage/sandbox|your personal sandbox]].'
     },
     'Template:Sandbox': {
-        content: '<noinclude><!--DO NOT REMOVE THIS LINE-->{{sandbox top}}<!--PERFORM YOUR TEST BELOW--></noinclude>',
+        content: '<noinclude><!--DO NOT REMOVE THIS LINE-->{{sandbox top}}<!--PERFORM YOUR TEST BELOW--></noinclude><!--\n-->',
         summary: 'Sandbox cleanup. For long-term testing, please use [[Special:MyPage/sandbox|your personal sandbox]].'
     },
     'Module:Sandbox': {
