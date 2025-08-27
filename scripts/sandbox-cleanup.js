@@ -13,7 +13,7 @@ const PAGES = {
         summary: 'Sandbox cleanup. For long-term testing, please use [[Special:MyPage/sandbox|your personal sandbox]].'
     },
     'Module:Sandbox': {
-        content: '',
+        content: 'local p = {}\n\n\nreturn p',
         summary: 'Sandbox cleanup. For long-term testing, please use “Module:Sandbox/Your_username” or its subpages.'
     }
 };
