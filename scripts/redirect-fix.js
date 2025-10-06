@@ -51,6 +51,7 @@ async function editPageText(title, text, summary) {
         text,
         summary,
         bot: true,
+        tags: 'hoohu-redirect',
         watchlist: 'nochange'
     };
     const { data } = await api.postWithToken('csrf', body, { retry: 10, noCache: true });
