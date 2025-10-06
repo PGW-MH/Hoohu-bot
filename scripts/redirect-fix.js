@@ -18,7 +18,9 @@ async function queryQueryPage(qppage) {
         },
         { retry: 10 }
     );
-    return (data?.query?.querypage?.results || []).map((r) => normalizeTitle(r.title));
+    const results = data?.query?.querypage?.results || [];
+    const filtered = results.filter((r) => r.ns !== 2);
+    return filtered.map((r) => normalizeTitle(r.title));
 }
 
 async function queryFollowRedirects(title) {
@@ -126,7 +128,7 @@ async function main() {
     const doubleList = await queryQueryPage('DoubleRedirects');
     const brokenList = await queryQueryPage('BrokenRedirects');
 
-    const combined = Array.from(new Set([...doubleList, ...brokenList, 'User:Honoka55/test']));
+    const combined = Array.from(new Set([...doubleList, ...brokenList]));
 
     console.log('Combined list length (incl test):', combined.length);
 
