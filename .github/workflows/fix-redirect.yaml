@@ -21,7 +21,7 @@ jobs:
         run: npm install
 
       - name: Run redirect fix
-        run: node scripts/redirect-fix.js
+        run: node scripts/fix-redirect.js
         env:
           HOOHU_UA: ${{ secrets.HOOHU_UA }}
           HOOHU_PASSWORD: ${{ secrets.HOOHU_PASSWORD }}
