@@ -1,4 +1,4 @@
-name: Redirect Fix (Double & Broken)
+name: Redirect fix (double & broken)
 
 on:
   schedule:
