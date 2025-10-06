@@ -1,0 +1,27 @@
+name: Interlanguage link Fix
+
+on:
+  workflow_dispatch:
+    - cron: '0 15 1-31/3 * *'
+  workflow_dispatch:
+
+jobs:
+  fix-interlang-links:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+
+      - name: Install dependencies
+        run: npm install
+
+      - name: Run interlang fix
+        run: node scripts/fix-interlang.js
+        env:
+          HOOHU_UA: ${{ secrets.HOOHU_UA }}
+          HOOHU_PASSWORD: ${{ secrets.HOOHU_PASSWORD }}
