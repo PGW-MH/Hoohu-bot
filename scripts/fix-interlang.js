@@ -287,7 +287,7 @@ async function processPage(title, remoteApisCache) {
 
     const cleaned = removeAllInterlangsFromContent(content);
     const finalLine = buildFinalInterlangLine(finalMap);
-    const newContent = finalLine ? (cleaned ? `${cleaned}\n\n${finalLine}` : `${finalLine}`) : cleaned;
+    const newContent = finalLine ? (cleaned ? `${cleaned}\n${finalLine}` : `${finalLine}`) : cleaned;
 
     if ((newContent || '').trim() === (content || '').trim()) {
         console.log(`  [NOCHANGE] page content unchanged -> skip editing.`);
