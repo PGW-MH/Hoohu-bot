@@ -6,7 +6,6 @@ const USER_AGENT = config.useragent;
 const MAX_DEPTH = 20;
 
 const OTHER_APIS = {
-    vi: 'https://vi.wikipedia.org/w/api.php',
     zh: 'http://xyy.huijiwiki.com/api.php'
 };
 
@@ -42,19 +41,7 @@ async function tryCreateAndTestApi(baseUrl) {
         if (!data) throw new Error('no siteinfo');
         return api;
     } catch (err) {
-        if (baseUrl.startsWith('http://')) {
-            const httpsUrl = 'https://' + baseUrl.slice('http://'.length);
-            try {
-                const api2 = createRemoteApi(httpsUrl);
-                const { data } = await api2.get({ action: 'query', meta: 'siteinfo', format: 'json' }, { retry: 3 });
-                if (!data) throw new Error('no siteinfo on https fallback');
-                console.warn(`[WARN] ${baseUrl} probe failed; using HTTPS fallback ${httpsUrl}`);
-                return api2;
-            } catch (err2) {
-                console.error(`[ERROR] Both HTTP and HTTPS probes failed for ${baseUrl}:`, err2?.message || err2);
-                throw err2;
-            }
-        }
+        console.error(`[ERROR] API probe failed for ${baseUrl}:`, err?.message || err);
         throw err;
     }
 }
@@ -118,6 +105,7 @@ async function savePgwPageContent(title, newText, summary) {
         text: newText,
         summary,
         bot: true,
+        tags: 'hoohu-interlang',
         watchlist: 'nochange'
     };
     const { data } = await pgwApi.postWithToken('csrf', body, { retry: 10, noCache: true });
@@ -318,8 +306,7 @@ async function processPage(title, remoteApisCache) {
     const allPages = await getAllPgwNamespacePages();
     console.log(`Total main-namespace pages: ${allPages.length}`);
 
-    // const toProcess = allPages.filter((t) => !withoutSet.has(t));
-    const toProcess = ['User:Honoka55/test'];
+    const toProcess = allPages.filter((t) => !withoutSet.has(t));
     console.log(`Pages to process (after filtering): ${toProcess.length}`);
 
     const remoteApisCache = {};
