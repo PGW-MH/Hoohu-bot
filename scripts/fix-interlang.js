@@ -218,11 +218,22 @@ function extractFirstInterlangMap(content) {
 function removeAllInterlangsFromContent(content) {
     const lines = content.split(/\r?\n/);
     const newLines = [];
+
     for (let line of lines) {
-        const cleaned = line.replace(INTERLANG_REMOVE_RE, '').replace(/\s+$/, '');
-        if (cleaned.trim().length === 0) continue;
-        newLines.push(cleaned);
+        const hasInterlang = INTERLANG_REMOVE_RE.test(line);
+        INTERLANG_REMOVE_RE.lastIndex = 0;
+
+        if (hasInterlang) {
+            const cleaned = line.replace(INTERLANG_REMOVE_RE, '').replace(/\s+$/, '');
+            if (cleaned.trim().length === 0) {
+                continue;
+            }
+            newLines.push(cleaned);
+        } else {
+            newLines.push(line);
+        }
     }
+
     return newLines.join('\n').trimEnd();
 }
 
