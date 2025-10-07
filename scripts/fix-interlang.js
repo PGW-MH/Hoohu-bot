@@ -69,6 +69,7 @@ async function getAllPgwNamespacePages() {
             list: 'allpages',
             apnamespace: 0,
             aplimit: 'max',
+            apfilterredir: 'nonredirects',
             format: 'json'
         };
         if (apcontinue) params.apcontinue = apcontinue;
