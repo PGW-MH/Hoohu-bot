@@ -21,7 +21,18 @@ const INTERLANG_RE_GLOBAL = new RegExp(`\\[\\[(?!:)((?:${langPattern})):([^\\]\\
 const INTERLANG_REMOVE_RE = new RegExp(`\\[\\[(?!:)(?:${langPattern}):[^\\]\\n]+?\\]\\]`, 'gi');
 
 function createRemoteApi(baseUrl) {
-    return new MediaWikiApi(baseUrl, { headers: { 'user-agent': USER_AGENT } });
+    const headers = { 'user-agent': USER_AGENT };
+
+    if (baseUrl.includes('huijiwiki.com')) {
+        const key = process.env.HUIJI_AUTHKEY;
+        if (!key) {
+            console.warn('HUIJI_AUTHKEY is required for huijiwiki API access but not found in environment variables.');
+            return new MediaWikiApi(baseUrl, { headers });
+        }
+        headers['X-authkey'] = key;
+    }
+
+    return new MediaWikiApi(baseUrl, { headers });
 }
 
 async function tryCreateAndTestApi(baseUrl) {

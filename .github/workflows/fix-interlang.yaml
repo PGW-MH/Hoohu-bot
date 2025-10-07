@@ -1,8 +1,8 @@
 name: Interlanguage link fix
 
 on:
-  # schedule:
-  #   - cron: '0 15 1-31/3 * *'
+  schedule:
+    - cron: '0 15 1-31/3 * *'
   workflow_dispatch:
 
 jobs:
@@ -25,3 +25,4 @@ jobs:
         env:
           HOOHU_UA: ${{ secrets.HOOHU_UA }}
           HOOHU_PASSWORD: ${{ secrets.HOOHU_PASSWORD }}
+          HUIJI_AUTHKEY: ${{ secrets.HUIJI_AUTHKEY }}
