@@ -6,7 +6,7 @@ const USER_AGENT = config.useragent;
 const MAX_DEPTH = 20;
 
 const OTHER_APIS = {
-    zh: 'http://xyy.huijiwiki.com/api.php'
+    zh: 'http://xyy.huijiwiki.com/api.php' // Note: Intentionally using HTTP instead of HTTPS; see https://www.huijiwiki.com/p/23693 for details.
 };
 
 const pgwApi = new MediaWikiApi(PGW_API, { headers: { 'user-agent': USER_AGENT } });
