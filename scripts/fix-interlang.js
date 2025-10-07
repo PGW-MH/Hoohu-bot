@@ -153,8 +153,7 @@ async function resolveFinalRemoteTitle(api, startTitle) {
         try {
             q = await queryRemoteFollowRedirects(api, current);
         } catch (err) {
-            console.error(`[ERROR] queryRemoteFollowRedirects failed for ${current}:`, err?.message || err);
-            return null;
+            throw new Error(`Remote query failed for "${current}": ${err?.message || err}`);
         }
 
         const redirects = q?.query?.redirects || [];
@@ -172,8 +171,7 @@ async function resolveFinalRemoteTitle(api, startTitle) {
         try {
             logs = await findRemoteMoveLogs(api, current);
         } catch (err) {
-            console.error(`[ERROR] findRemoteMoveLogs failed for ${current}:`, err?.message || err);
-            return null;
+            throw new Error(`Remote log query failed for "${current}": ${err?.message || err}`);
         }
         if (logs && logs.length > 0) {
             let chosen = null;
@@ -271,11 +269,21 @@ async function processPage(title, remoteApisCache) {
                 apiRemote = await tryCreateAndTestApi(baseUrl);
                 remoteApisCache[lang] = apiRemote;
             } catch (err) {
-                console.error(`    [ERROR] Could not create remote API for ${lang} (${baseUrl}), skipping this lang.`);
-                continue;
+                console.error(`    [ERROR] Could not create remote API for ${lang} (${baseUrl}):`, err?.message || err);
+                console.log(`    [SKIP] remote API init failed for ${lang}. Keeping original page unchanged.`);
+                return;
             }
         }
-        const finalBase = await resolveFinalRemoteTitle(apiRemote, initialBaseTitle);
+
+        let finalBase;
+        try {
+            finalBase = await resolveFinalRemoteTitle(apiRemote, initialBaseTitle);
+        } catch (err) {
+            console.error(`    [ERROR] Remote resolution failed for ${lang}:${initialBaseTitle}:`, err?.message || err);
+            console.log(`    [SKIP] remote resolution error for ${lang}. Keeping original page unchanged.`);
+            return;
+        }
+
         if (finalBase) {
             const finalWithAnchor = anchor ? `${finalBase}#${anchor}` : finalBase;
             finalMap.set(lang, finalWithAnchor);
