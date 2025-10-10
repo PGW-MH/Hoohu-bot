@@ -60,7 +60,7 @@ async function getWithoutInterwikiTitles() {
     return new Set(results.map((r) => r.title));
 }
 
-async function getAllPgwNamespacePages() {
+async function getAllPages() {
     const titles = [];
     let apcontinue;
     while (true) {
@@ -82,7 +82,7 @@ async function getAllPgwNamespacePages() {
     return titles;
 }
 
-async function getPgwPageContent(title) {
+async function getPageContent(title) {
     const { data } = await pgwApi.get(
         {
             action: 'query',
@@ -99,7 +99,7 @@ async function getPgwPageContent(title) {
     return page.revisions?.[0]?.content ?? '';
 }
 
-async function savePgwPageContent(title, newText, summary) {
+async function savePageContent(title, newText, summary) {
     const body = {
         action: 'edit',
         title,
@@ -244,7 +244,7 @@ function buildFinalInterlangLine(finalMap) {
 
 async function processPage(title, remoteApisCache) {
     console.log(`Processing page: ${title}`);
-    const content = await getPgwPageContent(title);
+    const content = await getPageContent(title);
     if (content === null) {
         console.log(`  [SKIP] page not found: ${title}`);
         return;
@@ -304,7 +304,7 @@ async function processPage(title, remoteApisCache) {
 
     console.log(`  [EDIT] saving updated interlang footer for ${title}`);
     try {
-        await savePgwPageContent(title, newContent, 'Normalize and repair interlanguage links.');
+        await savePageContent(title, newContent, 'Normalize and repair interlanguage links.');
         console.log(`  [OK] ${title} updated.`);
     } catch (err) {
         console.error(`  [ERROR] saving ${title}:`, err?.message || err);
@@ -323,7 +323,7 @@ async function processPage(title, remoteApisCache) {
     const withoutSet = await getWithoutInterwikiTitles();
     console.log(`Withoutinterwiki count: ${withoutSet.size}`);
 
-    const allPages = await getAllPgwNamespacePages();
+    const allPages = await getAllPages();
     console.log(`Total main-namespace pages: ${allPages.length}`);
 
     const toProcess = allPages.filter((t) => !withoutSet.has(t));
