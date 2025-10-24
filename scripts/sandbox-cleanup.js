@@ -12,6 +12,10 @@ const PAGES = {
         content: '<noinclude><!--DO NOT REMOVE THIS LINE-->{{sandbox top}}<!--PERFORM YOUR TEST BELOW--></noinclude><!--\n-->',
         summary: 'Sandbox cleanup. For long-term testing, please use [[Special:MyPage/sandbox|your personal sandbox]].'
     },
+    'Template:Sandbox/styles.css': {
+        content: '/* Perform your test here */',
+        summary: 'Sandbox cleanup. For long-term testing, please use [[Special:MyPage/sandbox|your personal sandbox]].'
+    },
     'Module:Sandbox': {
         content: 'local p = {}\n\nfunction p.main(frame)\n    -- perform your test here\nend\n\nreturn p',
         summary: 'Sandbox cleanup. For long-term testing, please use “Module:Sandbox/Your_username” or its subpages.'
