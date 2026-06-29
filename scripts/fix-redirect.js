@@ -171,9 +171,6 @@ async function main() {
             } else if (resolved.type === 'self') {
                 console.log(`[SELF] "${title}" detected self-redirect in chain. Replacing with delete template.`);
                 await editPageText(title, '{{delete|Self-redirect.}}', 'Mark self-redirect for deletion.');
-            } else if (resolved.type === 'missing') {
-                console.log(`[SKIP] "${title}" does not exist → skip.`);
-                continue;
             } else {
                 console.log(`[DELETE] "${title}" has no resolvable final target. Replacing with delete template.`);
                 await editPageText(title, '{{delete|Broken redirect.}}', 'Mark broken redirect for deletion.');
